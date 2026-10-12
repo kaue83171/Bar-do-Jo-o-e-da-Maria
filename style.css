@@ -1,0 +1,689 @@
+/* ===== Cores e medidas ===== */
+:root {
+  --verde: #12382f;
+  --verde-medio: #1d5646;
+  --ambar: #e0a21b;
+  --ambar-claro: #f3c65f;
+  --fundo: #f1f3ef;
+  --cartao: #ffffff;
+  --papel: #fffef9;
+  --tinta: #1d2420;
+  --suave: #5d6a63;
+  --borda: #d5dbd5;
+  --borda-forte: #b9c2bb;
+  --perigo: #b3382f;
+  --raio: 8px;
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --madeira-clara: #cf9a58;
+  --madeira: #a8743c;
+  --madeira-escura: #94632f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  /* Parede de azulejo: brilho + rejunte em cada azulejo de 64px */
+  background-color: #dbe6d3;
+  background-image:
+    radial-gradient(circle at 28% 22%, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 50%),
+    linear-gradient(rgba(18, 56, 47, 0.13) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(18, 56, 47, 0.13) 2px, transparent 2px);
+  background-size: 64px 64px;
+  color: var(--tinta);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  line-height: 1.45;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+}
+
+img {
+  display: block;
+}
+
+/* ===== Topo ===== */
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding: 0.9rem 1.5rem;
+  background: var(--verde);
+  color: #f6efe0;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.marca__logo {
+  flex: none;
+  width: 56px;
+  height: 56px;
+}
+
+.marca h1 {
+  font-family: var(--fonte-titulo);
+  font-size: 1.8rem;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+
+.marca p {
+  margin: 0.15rem 0 0;
+  color: #a8c2b6;
+  font-size: 0.95rem;
+}
+
+/* Toldo listrado de mercadinho (a máscara recorta as pontas arredondadas) */
+.toldo {
+  height: 30px;
+  background: repeating-linear-gradient(90deg, #b3382f 0 36px, #fbf6ea 36px 72px);
+  -webkit-mask:
+    linear-gradient(#000, #000) 0 0 / 100% 16px no-repeat,
+    radial-gradient(circle at 18px 0, #000 17.5px, transparent 18px) 0 16px / 36px 14px repeat-x;
+  mask:
+    linear-gradient(#000, #000) 0 0 / 100% 16px no-repeat,
+    radial-gradient(circle at 18px 0, #000 17.5px, transparent 18px) 0 16px / 36px 14px repeat-x;
+}
+
+/* ===== Botões ===== */
+.btn {
+  padding: 0.65rem 1.1rem;
+  border: 2px solid transparent;
+  border-radius: var(--raio);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn:focus-visible,
+.modal__fechar:focus-visible,
+.mini:focus-visible,
+.barra-mobile:focus-visible,
+input:focus-visible {
+  outline: 3px solid #2f8fd0;
+  outline-offset: 2px;
+}
+
+.btn--cheio {
+  width: 100%;
+}
+
+.btn--principal {
+  background: var(--ambar);
+  color: #231a00;
+}
+
+.btn--principal:hover:not(:disabled) {
+  background: var(--ambar-claro);
+}
+
+.btn--principal:disabled {
+  background: #d9dcd7;
+  color: #8a938d;
+  cursor: not-allowed;
+}
+
+.btn--contorno {
+  background: transparent;
+  border-color: var(--verde);
+  color: var(--verde);
+}
+
+.btn--contorno:hover {
+  background: #e3ece7;
+}
+
+.btn--claro {
+  background: transparent;
+  border-color: #4d7466;
+  color: #f6efe0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.btn--claro:hover {
+  background: var(--verde-medio);
+}
+
+.selo {
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background: var(--ambar);
+  color: #231a00;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Layout principal ===== */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 5.5rem;
+}
+
+.cardapio > h2 {
+  display: inline-block;
+  margin-bottom: 1.1rem;
+  padding: 0.3rem 1.5rem;
+  background: #22403a;
+  border: 6px solid var(--madeira);
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(40, 25, 5, 0.3);
+  color: #f6efe0;
+  font-family: var(--fonte-titulo);
+  font-size: 1.5rem;
+}
+
+/* ===== Cardápio ===== */
+.categoria {
+  --tom: #eceee9;
+  --tom-forte: var(--borda-forte);
+  margin-bottom: 2.6rem;
+}
+
+.categoria[data-categoria="cervejas"]   { --tom: #fbecc4; --tom-forte: #e0a21b; }
+.categoria[data-categoria="porcoes"]    { --tom: #fbdfcf; --tom-forte: #d9703a; }
+.categoria[data-categoria="drinks"]     { --tom: #e2f0cf; --tom-forte: #5f9e3f; }
+.categoria[data-categoria="sem-alcool"] { --tom: #d9ecf7; --tom-forte: #2f8fd0; }
+
+.categoria h3 {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  padding: 0.3rem 1rem 0.3rem 0.8rem;
+  background: #fffaf0;
+  border-left: 8px solid var(--tom-forte);
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(40, 25, 5, 0.25);
+  font-family: var(--fonte-titulo);
+  font-size: 1.2rem;
+}
+
+.produtos {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.85rem;
+  padding: 1rem 1rem 1.1rem;
+  /* fundo da estante: madeira clara com veios verticais */
+  background:
+    repeating-linear-gradient(90deg, rgba(60, 35, 10, 0.05) 0 2px, transparent 2px 16px),
+    linear-gradient(#cdb48a, #d9c39d);
+  border-radius: 6px 6px 0 0;
+  box-shadow:
+    inset 0 8px 12px rgba(60, 35, 10, 0.28),
+    inset 6px 0 8px rgba(60, 35, 10, 0.12),
+    inset -6px 0 8px rgba(60, 35, 10, 0.12);
+}
+
+/* A tábua da prateleira, com sombra na parede */
+.produtos::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  bottom: -16px;
+  height: 16px;
+  border-radius: 0 0 5px 5px;
+  background: linear-gradient(var(--madeira-clara) 0 4px, var(--madeira) 4px, var(--madeira-escura) 100%);
+  box-shadow: 0 7px 10px rgba(40, 25, 5, 0.3);
+}
+
+.produto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.6rem 0.6rem 0.8rem;
+  background: #fffaf0;
+  border: 1px solid #e9dcc2;
+  border-radius: var(--raio);
+  box-shadow: 0 3px 6px rgba(60, 35, 10, 0.22);
+}
+
+.produto__foto {
+  display: grid;
+  place-items: center;
+  height: 116px;
+  background: var(--tom);
+  border-radius: 6px;
+}
+
+.produto__imagem {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.produto > div:not(.produto__foto) {
+  flex: 1;
+  padding: 0 0.2rem;
+}
+
+.produto__nome {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Etiqueta de preço amarela, com o furinho de pendurar */
+.produto__preco {
+  position: relative;
+  display: inline-block;
+  margin: 0.35rem 0 0;
+  padding: 0.1rem 0.65rem 0.1rem 1.2rem;
+  background: #ffe14d;
+  border-radius: 3px 10px 10px 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  color: #b3282a;
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.produto__preco::before {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  top: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: -0.225rem;
+  border-radius: 50%;
+  background: #fffaf0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+
+/* ===== Comanda (nota de papel) ===== */
+.comanda {
+  position: relative;
+  align-self: start;
+  padding: 1.25rem 1.1rem 1.25rem;
+  background: var(--papel);
+  border: 1px solid #e3d8bf;
+  border-top: 8px solid var(--ambar);
+  border-radius: var(--raio);
+  box-shadow: 0 6px 14px rgba(40, 25, 5, 0.25);
+}
+
+/* Tachinha vermelha que prende a comanda na parede */
+.comanda::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff8f80, #b3282a 62%);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+}
+
+.comanda__titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.5rem;
+  font-family: var(--fonte-titulo);
+  font-size: 1.35rem;
+}
+
+/* Ícone do carrinho com o número de itens */
+.carrinho {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.contagem {
+  position: absolute;
+  top: -6px;
+  right: -9px;
+  display: grid;
+  place-items: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  padding: 0 0.3rem;
+  border: 2px solid var(--papel);
+  border-radius: 999px;
+  background: var(--perigo);
+  color: #fff;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.contagem.pulo {
+  animation: pulo 0.3s ease;
+}
+
+@keyframes pulo {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+.comanda__lista {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.comanda__vazio {
+  padding: 1.25rem 0;
+  color: var(--suave);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 0.3rem 0.75rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px dashed var(--borda-forte);
+}
+
+.item__imagem {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 44px;
+  height: 44px;
+  padding: 3px;
+  background: #eef1ed;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.item__nome {
+  grid-column: 2;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.item__subtotal {
+  grid-column: 3;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.item__controles {
+  grid-column: 2 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.item__qtd {
+  min-width: 1.6rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.mini {
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mini:hover {
+  background: #eef1ed;
+}
+
+.mini--remover {
+  margin-left: auto;
+  border-color: #e3b9b5;
+  color: var(--perigo);
+}
+
+.mini--remover:hover {
+  background: #faeceb;
+}
+
+.comanda__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+  padding-top: 0.75rem;
+  border-top: 2px dashed var(--borda-forte);
+  font-size: 1.1rem;
+}
+
+.comanda__total strong {
+  font-size: 1.7rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Barra fixa do celular ===== */
+.barra-mobile {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1.1rem;
+  background: var(--verde);
+  color: #f6efe0;
+  text-decoration: none;
+}
+
+.barra-mobile__texto {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 600;
+}
+
+.barra-mobile .contagem {
+  border-color: var(--verde);
+}
+
+.barra-mobile strong {
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Janelas (dialog) ===== */
+dialog {
+  width: min(480px, calc(100% - 2rem));
+  max-height: calc(100% - 2rem);
+  padding: 1.25rem;
+  border: none;
+  border-radius: var(--raio);
+  background: var(--cartao);
+  color: var(--tinta);
+}
+
+dialog::backdrop {
+  background: rgba(8, 24, 19, 0.6);
+}
+
+.modal__cabeca {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.modal__cabeca h2 {
+  font-family: var(--fonte-titulo);
+  font-size: 1.35rem;
+}
+
+.modal__fechar {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal__fechar:hover {
+  background: #eef1ed;
+}
+
+.modal__resumo {
+  margin: 1rem 0 0;
+  font-size: 1.05rem;
+}
+
+.modal__resumo strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.opcoes {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.form-fiado {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.form-fiado label {
+  font-weight: 600;
+}
+
+.form-fiado input {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #aab4ad;
+  border-radius: var(--raio);
+  font: inherit;
+}
+
+/* ===== Caderneta do fiado (folha de caderno) ===== */
+#modal-caderneta {
+  padding-left: 3.4rem;
+  background-color: var(--papel);
+  background-image:
+    linear-gradient(to right, transparent 2.6rem, #e8a7a1 2.6rem, #e8a7a1 calc(2.6rem + 2px), transparent calc(2.6rem + 2px)),
+    repeating-linear-gradient(to bottom, transparent 0 31px, #dfe9f1 31px 32px);
+  background-attachment: local;
+}
+
+#modal-caderneta .modal__cabeca {
+  margin-left: -0.4rem;
+}
+
+.fiados {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fiados__vazio {
+  padding: 1rem 0;
+  color: var(--suave);
+}
+
+.fiado {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0 1rem;
+  min-height: 64px;
+}
+
+.fiado__nome {
+  font-family: var(--fonte-titulo);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.fiado__valor {
+  color: var(--perigo);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.fiado .btn {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  padding: 0.5rem 0.8rem;
+  background: var(--papel);
+}
+
+/* ===== Telas maiores: duas colunas ===== */
+@media (min-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr 370px;
+    padding-bottom: 2rem;
+  }
+
+  .comanda {
+    position: sticky;
+    top: 1rem;
+  }
+
+  .barra-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .topo {
+    padding: 0.8rem 1rem;
+  }
+
+  .marca h1 {
+    font-size: 1.5rem;
+  }
+
+  .produtos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    padding: 0.7rem 0.6rem 0.8rem;
+  }
+
+  .produto__foto {
+    height: 100px;
+  }
+
+  .produto__imagem {
+    width: 82px;
+    height: 82px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+
+  .contagem.pulo {
+    animation: none;
+  }
+}

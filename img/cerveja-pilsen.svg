@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+<ellipse cx="60" cy="114" rx="26" ry="4" fill="#000" opacity=".1"/>
+<rect x="52" y="6" width="16" height="7" rx="2" fill="#d9a22b"/>
+<path d="M54 13h12v21c0 8 12 14 12 28v46a4 4 0 0 1-4 4H46a4 4 0 0 1-4-4V62c0-14 12-20 12-28z" fill="#7a4a1e"/>
+<rect x="42" y="66" width="36" height="30" fill="#f6ecd2"/>
+<circle cx="60" cy="78" r="8" fill="#e0a21b"/>
+<text x="60" y="92" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#7a4a1e" text-anchor="middle">PILSEN</text>
+<path d="M57 17v15" stroke="#fff" stroke-opacity=".28" stroke-width="3" stroke-linecap="round"/>
+<path d="M46 100v8" stroke="#fff" stroke-opacity=".28" stroke-width="3" stroke-linecap="round"/>
+</svg>

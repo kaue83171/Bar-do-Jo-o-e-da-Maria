@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bar João &amp; Maria - Caixa</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topo">
+    <div class="marca">
+      <img class="marca__logo" src="img/logo.svg" alt="" width="56" height="56">
+      <div>
+        <h1>Bar João &amp; Maria</h1>
+        <p>Caixa do balcão</p>
+      </div>
+    </div>
+
+    <button type="button" id="btn-caderneta" class="btn btn--claro">
+      Caderneta do fiado
+      <span id="total-fiado" class="selo">R$ 0,00</span>
+    </button>
+  </header>
+
+  <!-- Faixa decorativa: toldo listrado de mercadinho -->
+  <div class="toldo" aria-hidden="true"></div>
+
+  <main class="layout">
+
+    <!-- Cardápio: os produtos são criados pelo script.js -->
+    <section class="cardapio" aria-labelledby="titulo-cardapio">
+      <h2 id="titulo-cardapio">Cardápio</h2>
+      <div id="cardapio"></div>
+    </section>
+
+    <!-- Comanda (carrinho) do pedido atual -->
+    <aside id="comanda" class="comanda" aria-labelledby="titulo-comanda">
+      <h2 id="titulo-comanda" class="comanda__titulo">
+        <span class="carrinho">
+          <img src="img/carrinho.svg" alt="" width="44" height="44">
+          <span id="qtd-itens" class="contagem" hidden>0</span>
+        </span>
+        Comanda atual
+      </h2>
+
+      <ul id="lista-comanda" class="comanda__lista"></ul>
+
+      <div class="comanda__total">
+        <span>Total da conta</span>
+        <strong id="total-comanda">R$ 0,00</strong>
+      </div>
+
+      <button type="button" id="btn-fechar" class="btn btn--principal btn--cheio" disabled>
+        Fechar conta
+      </button>
+    </aside>
+
+  </main>
+
+  <!-- Barra fixa que só aparece no celular -->
+  <a class="barra-mobile" href="#comanda">
+    <span class="barra-mobile__texto">
+      <span class="carrinho">
+        <img src="img/carrinho.svg" alt="" width="36" height="36">
+        <span id="qtd-barra" class="contagem" hidden>0</span>
+      </span>
+      Ver comanda
+    </span>
+    <strong id="total-barra">R$ 0,00</strong>
+  </a>
+
+  <!-- Janela: fechamento do pedido -->
+  <dialog id="modal-fechamento" aria-labelledby="titulo-fechamento">
+    <div class="modal__cabeca">
+      <h2 id="titulo-fechamento">Fechar conta</h2>
+      <button type="button" class="modal__fechar" data-fechar aria-label="Fechar janela">&times;</button>
+    </div>
+
+    <p class="modal__resumo">Total da conta: <strong id="total-fechamento">R$ 0,00</strong></p>
+
+    <div id="opcoes-pagamento" class="opcoes">
+      <button type="button" id="btn-pagar" class="btn btn--principal btn--cheio">Pagamento imediato</button>
+      <button type="button" id="btn-fiado" class="btn btn--contorno btn--cheio">Deixar fiado</button>
+    </div>
+
+    <form id="form-fiado" class="form-fiado" hidden>
+      <label for="nome-cliente">Nome do cliente</label>
+      <input type="text" id="nome-cliente" list="lista-clientes" autocomplete="off" maxlength="60" required>
+      <datalist id="lista-clientes"></datalist>
+      <button type="submit" class="btn btn--principal btn--cheio">Anotar na caderneta</button>
+    </form>
+  </dialog>
+
+  <!-- Janela: caderneta de fiados -->
+  <dialog id="modal-caderneta" aria-labelledby="titulo-caderneta">
+    <div class="modal__cabeca">
+      <h2 id="titulo-caderneta">Caderneta do fiado</h2>
+      <button type="button" class="modal__fechar" data-fechar aria-label="Fechar janela">&times;</button>
+    </div>
+
+    <ul id="lista-fiados" class="fiados"></ul>
+
+    <p class="modal__resumo">Total em aberto: <strong id="total-aberto">R$ 0,00</strong></p>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
